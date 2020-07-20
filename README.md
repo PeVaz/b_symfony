@@ -1,1 +1,1 @@
-# Repositoy for the Symfony Book
+# Repository for the Symfony Book
