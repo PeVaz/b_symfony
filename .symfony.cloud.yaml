@@ -34,21 +34,24 @@ disk: 512
 
 mounts:
     "/var": { source: local, source_path: var }
-    "/public/uploads": { source: service, service: files, source_path: uploads }   
+    "/public/uploads": { source: service, service: files, source_path: uploads }
 
 hooks:
     build: |
         set -x -e
-
         curl -s https://get.symfony.com/cloud/configurator | (>&2 bash)
-        
         (>&2 symfony-build)
-
     deploy: |
         set -x -e
-
         (>&2 symfony-deploy)
-
+crons:
+    comment_cleanup:
+        # Cleanup every night at 11.50 pm (UTC).
+        spec: '50 23 * * *'
+        cmd: |
+            if [ "$SYMFONY_BRANCH" = "master" ]; then
+                croncape symfony console app:comment:cleanup
+            fi
 workers:
     messages:
         commands:
