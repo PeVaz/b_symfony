@@ -29,7 +29,7 @@ class RestaurantRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->andWhere('r.conference = :conference')
             ->setParameter('conference', $conference)
-            ->orderBy('r.open', 'ASC')
+            ->orderBy('r.name', 'ASC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult()
