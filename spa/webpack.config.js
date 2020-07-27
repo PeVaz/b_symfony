@@ -12,7 +12,7 @@ Encore
     .enableSingleRuntimeChunk()
     .addPlugin(new HtmlWebpackPlugin({ template: 'src/index.ejs', alwaysWriteToDisk: true }))
     .addPlugin(new webpack.DefinePlugin({
-        'ENV_API_ENDPOINT': JSON.stringify(process.env.API_ENDPOINT),
+        'ENV_API_ENDPOINT': JSON.stringify("https://127.0.0.1:8000/"),
     }))
 ;
 

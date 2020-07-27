@@ -1,5 +1,6 @@
 import {h} from 'preact';
 import {findComments} from '../api/api';
+import {findRestaurants} from '../api/api';
 import {useState, useEffect} from 'preact/hooks';
 
 function Comment({comments}) {
@@ -31,18 +32,42 @@ function Comment({comments}) {
     );
 }
 
+function Restaurant({restaurants}) {
+    if (restaurants !== null && restaurants.length === 0) {
+        return <div className="text-center pt-4">No restaurants yet</div>;
+    }
+
+    if (!restaurants) {
+        return <div className="text-center pt-4">Loading...</div>;
+    }
+
+    return (
+        <div className="pt-4">
+            {restaurants.map(restaurant => (
+                <div className="shadow border rounded-lg p-3 mb-4">
+                    <h5 className="font-weight-light mt-3 mb-0">{restaurant.name}</h5>
+                    <div className="restaurant-text">{restaurant.type}</div>
+                </div>
+            ))}
+        </div>
+    );
+}
+
 export default function Conference({conferences, slug}) {
     const conference = conferences.find(conference => conference.slug === slug);
     const [comments, setComments] = useState(null);
+    const [restaurants, setRestaurants] = useState(null);
 
     useEffect(() => {
         findComments(conference).then(comments => setComments(comments));
+        findRestaurants(conference).then(restaurants => setRestaurants(restaurants));
     }, [slug]);
 
     return (
         <div className="p-3">
             <h4>{conference.city} {conference.year}</h4>
             <Comment comments={comments} />
+            <Restaurant restaurants={restaurants} />
         </div>
     );
 }

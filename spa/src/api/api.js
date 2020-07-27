@@ -9,3 +9,7 @@ export function findConferences() {
 export function findComments(conference) {
     return fetchCollection('api/comments?conference='+conference.id);
 }
+
+export function findRestaurants(conference) {
+    return fetchCollection('api/restaurants?conference='+conference.id);
+}
