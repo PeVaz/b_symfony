@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Conference;
 use App\Entity\Restaurant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,19 +23,18 @@ class RestaurantRepository extends ServiceEntityRepository
     // /**
     //  * @return Restaurant[] Returns an array of Restaurant objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function getAllRestaurants(Conference $conference)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('r.conference = :conference')
+            ->setParameter('conference', $conference)
+            ->orderBy('r.open', 'ASC')
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Restaurant

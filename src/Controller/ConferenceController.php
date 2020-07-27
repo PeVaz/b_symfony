@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Restaurant;
 use App\Entity\Conference;
 use App\Form\CommentFormType;
 use App\Message\CommentMessage;
 use App\Repository\CommentRepository;
+use App\Repository\RestaurantRepository;
 use App\Repository\ConferenceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,9 +72,10 @@ class ConferenceController extends AbstractController
     /**
      * @Route("/{_locale<%app.supported_locales%>}/conference/{slug}", name="conference")
      */
-    public function show(Request $request, Conference $conference, CommentRepository $commentRepository, NotifierInterface $notifier, string $photoDir)
+    public function show(Request $request, Conference $conference, RestaurantRepository $restaurantRepository, CommentRepository $commentRepository, NotifierInterface $notifier, string $photoDir)
     {
         $comment = new Comment();
+        $restaurant = new Restaurant();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -112,8 +115,11 @@ class ConferenceController extends AbstractController
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
 
+        $food = $restaurantRepository->getAllRestaurants($conference);
+
         return new Response($this->twig->render('conference/show.html.twig', [
             'conference' => $conference,
+            'restaurants' => $food,
             'comments' => $paginator,
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),

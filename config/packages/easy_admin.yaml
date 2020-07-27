@@ -34,3 +34,5 @@ easy_admin:
         
         Restaurant:
             class: App\Entity\Restaurant
+            list:
+                filters: ['conference']
