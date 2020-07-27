@@ -5,8 +5,22 @@ namespace App\Entity;
 use App\Repository\RestaurantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 /**
- * @ORM\Entity(repositoryClass=RestaurantRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\RestaurantRepository")
+ *
+ * @ApiResource(
+ *     collectionOperations={"get"={"normalization_context"={"groups"="restaurant:list"}}},
+ *     itemOperations={"get"={"normalization_context"={"groups"="restaurant:item"}}},
+ *     paginationEnabled=false
+ * )
+ * 
+ * @ApiFilter(SearchFilter::class, properties={"conference": "exact"})
+ * 
  */
 class Restaurant
 {
@@ -14,27 +28,37 @@ class Restaurant
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"restaurant:list", "restaurant:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"restaurant:list", "restaurant:item"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"restaurant:list", "restaurant:item"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="boolean")
+     * 
+     * @Groups({"restaurant:list", "restaurant:item"})
      */
     private $open;
 
     /**
      * @ORM\ManyToOne(targetEntity=Conference::class, inversedBy="restaurants")
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Groups({"restaurant:list", "restaurant:item"})
      */
     private $conference;
 
