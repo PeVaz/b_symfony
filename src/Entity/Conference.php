@@ -65,9 +65,15 @@ class Conference
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Restaurant::class, mappedBy="conference", orphanRemoval=true)
+     */
+    private $restaurants;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->restaurants = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -162,6 +168,37 @@ class Conference
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Restaurant[]
+     */
+    public function getRestaurants(): Collection
+    {
+        return $this->restaurants;
+    }
+
+    public function addRestaurant(Restaurant $restaurant): self
+    {
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
+            $restaurant->setConference($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurant $restaurant): self
+    {
+        if ($this->restaurants->contains($restaurant)) {
+            $this->restaurants->removeElement($restaurant);
+            // set the owning side to null (unless already changed)
+            if ($restaurant->getConference() === $this) {
+                $restaurant->setConference(null);
+            }
+        }
 
         return $this;
     }

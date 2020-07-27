@@ -6,6 +6,7 @@ easy_admin:
             - { route: 'homepage', label: 'Back to the website', icon: 'home' }
             - { entity: 'Conference', label: 'Conferences', icon: 'map-marker' }
             - { entity: 'Comment', label: 'Comments', icon: 'comments' }
+            - { entity: 'Restaurant', label: 'Restaurants', icon: 'cutlery'}
 
     entities:
         Conference:
@@ -30,3 +31,6 @@ easy_admin:
                     - { property: 'state'}
                     - { property: 'email', type: 'email' }
                     - text
+        
+        Restaurant:
+            class: App\Entity\Restaurant
