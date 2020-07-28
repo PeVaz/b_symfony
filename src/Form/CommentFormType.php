@@ -20,6 +20,11 @@ class CommentFormType extends AbstractType
                 'label' => 'Your name',
             ])
             ->add('text')
+            ->add('rating',null,[
+                'data' => '5',
+                'required' => true,
+                'attr' => array('min' => 0, 'max' => 5)
+            ])
             ->add('email', EmailType::class)
             ->add('photo', FileType::class, [
                 'required' => false,
