@@ -85,6 +85,11 @@ class Comment
      */
     private $state = 'submitted';
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rating;
+
     public function __toString(): string
     {
         return (string) $this->getEmail();
@@ -183,6 +188,18 @@ class Comment
     public function setState(string $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(int $rating): self
+    {
+        $this->rating = $rating;
 
         return $this;
     }
