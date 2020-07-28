@@ -41,6 +41,18 @@
                             <div class="comment-text">
                                 {{ comment.text|nl2br }}
                             </div>
+                            <div class="rating">
+                                </br>
+                                Rating : 
+                                {% for i in 1..5 %}
+                                {% set starClass = (comment.rating >= i ? "star-voted" : "star-empty")  %}
+                                    {% if starClass == "star-voted" %}
+                                        <i class="{{ starClass }}">★</i>
+                                    {% else %}
+                                        <i class="{{ starClass }}">☆</i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

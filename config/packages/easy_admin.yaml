@@ -32,6 +32,7 @@ easy_admin:
                     - { property: 'state'}
                     - { property: 'email', type: 'email' }
                     - text
+                    - rating
         
         Restaurant:
             class: App\Entity\Restaurant
