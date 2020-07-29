@@ -24,7 +24,7 @@ function Comment({comments}) {
                         )}
                     </div>
 
-                    <h5 className="font-weight-light mt-3 mb-0">{comment.author}</h5>
+                    <h5 className="font-weight-light mt-3 mb-0">{comment.author} - {comment.rating}/5</h5>
                     <div className="comment-text">{comment.text}</div>
                 </div>
             ))}

@@ -87,6 +87,9 @@ class Comment
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * 
+     * @Groups({"comment:list", "comment:item"})
      */
     private $rating;
 
